@@ -27,8 +27,7 @@ df[['중심이동평균']] <- rollmean(df[['사분기이동평균']],2, fill=NA,
 df[['특정계절지수']] <- df[['매출액']] / df[['중심이동평균']]
 
 # 계절별 평균
-group <- group_by(df,분기)
-s_coeff <- summarise(group,대표계절지수=mean(특정계절지수,na.rm=T))
+s_coeff <- aggregate(특정계절지수 ~ 분기,df,mean)
 s_coeff
 
 df[['대표계절지수']] <- c(s_coeff[['대표계절지수']], rep(NA,nrow(df)-nrow(s_coeff)))
